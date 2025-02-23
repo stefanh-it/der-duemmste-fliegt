@@ -1,6 +1,8 @@
+from werkzeug.security import generate_password_hash
 from src.der_duemmste import create_app, db
 from src.der_duemmste.model.question import Question
 from src.der_duemmste.model.user import User
+
 
 app = create_app()
 
@@ -55,20 +57,20 @@ with app.app_context():
         Question("What is the capital of Vietnam?", "Hanoi"),
         Question("What is the capital of Malaysia?", "Kuala Lumpur"),
     ]
+    db.session.add_all(sample_questions)
+    print("Questions created")
 
     sample_players = [
-        User("player1", "player1", False),
-        User("player2", "player2", False),
-        User("player3", "player3", False),
-        User("player4", "player4", False),
-        User("player5", "player5", False),
+        User("player1", generate_password_hash("player1"), False),
+        User("player2", generate_password_hash("player2"), False),
+        User("player3", generate_password_hash("player3"), False),
+        User("player4", generate_password_hash("player4"), False),
+        User("player5", generate_password_hash("player5"), False),
     ]
 
-    if db.session.query(User).count() != 6:
-        db.session.query(User).filter_by(is_admin=False).delete()
-        db.session.add_all(sample_players)
-        print("Players created")
+    db.session.query(User).filter_by(is_admin=False).delete()
+    db.session.add_all(sample_players)
+    print("Players created")
 
-    db.session.add_all(sample_questions)
     db.session.commit()
     print("Database seeded.")
