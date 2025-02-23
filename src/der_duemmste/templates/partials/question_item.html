@@ -1,1 +1,18 @@
-<li class="p-2 border-b">{{ question.text }}</li>
+<tr id="question-{{ question.id }}">
+    <td class="py-2 px-4 border-b border-gray-700 text-left w-10">{{ question.id }}</td>
+    <td class="py-2 px-4 border-b border-gray-700 text-left">{{ question.question }}</td>
+    <td class="py-2 px-4 border-b border-gray-700 text-left">{{ question.answer }}</td>
+    <td class="py-2 px-4 border-b border-gray-700 text-center">
+        <!-- hx-target="#question-{{ question.id }}"  -->
+        <!-- hx-swap="outerHTML transition:true" -->
+        <button
+            hx-delete="{{ url_for('main.delete_question', question_id=question.id) }}"
+            hx-target="closest tr"
+            hx-swap="outerHTML transition:true"
+            hx-confirm="Do you want to delete?"
+            class="danger btn bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+        >
+            Delete
+        </button>
+    </td>
+</tr>

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "postcss ./src/der_duemmste/static/css/tailwind.css -o ./src/der_duemmste/static/css/style.css --watch",
-    "build-tailwind": "postcss ./src/der_duemmste/static/css/tailwind.css -o ./src/der_duemmste/static/css/style.css --minify"
+    "watch": "cp node_modules/htmx.org/dist/htmx.min.js src/der_duemmste/static/js && postcss ./src/der_duemmste/static/css/tailwind.css -o ./src/der_duemmste/static/css/style.css --watch",
+    "build-tailwind": "cp node_modules/htmx.org/dist/htmx.min.js src/der_duemmste/static/js && postcss ./src/der_duemmste/static/css/tailwind.css -o ./src/der_duemmste/static/css/style.css --minify"
   },
   "keywords": [],
   "author": "",
