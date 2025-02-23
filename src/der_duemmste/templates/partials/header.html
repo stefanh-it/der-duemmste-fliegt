@@ -6,22 +6,32 @@
                 {% if current_user.is_authenticated %}
                 {% if current_user.is_admin %}
                 <li class="mr-6">
-                    <a href="{{ url_for('main.list_questions') }}" class="bg-blue-500 hover:bg-blue-700 text-white 
-                                font-bold py-2 px-4 rounded">
+                    <a href="{{ url_for('main.list_questions') }}"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
                         Questions
                     </a>
                 </li>
-                {% endif %}
+                <li class="mr-6">
+                    <a href="{{ url_for('main.list_players') }}"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Players
+                    </a>
+                </li>
+                    {% endif %}
                 <li class="mr-6">
                     <a href="{{ url_for('auth.logout') }}"
-                        class="bg-gray-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        class="bg-gray-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    >
                         Logout
                     </a>
                 </li>
                 {% else %}
                 <li class="mr-6">
                     <a href="{{ url_for('auth.login') }}"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
                         Login
                     </a>
                 </li>

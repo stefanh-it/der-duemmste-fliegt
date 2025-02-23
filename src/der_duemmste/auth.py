@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
+from sqlalchemy.exc import IntegrityError
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from .model.user import User
 from . import db, login_manager
@@ -40,16 +41,21 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        user_exists = User.query.filter_by(username=username).first()
-        if user_exists:
-            flash("Username already exists", "error")
-        elif not username or not password:
-            flash("Invalid form input", "error")
-        else:
+        try:
             new_user = User(username=username, password=generate_password_hash(password))
             db.session.add(new_user)
             db.session.commit()
-            login_user(new_user)
-            return redirect(url_for("main.index"))
+            return render_template('partials/user_item.html', user=new_user)
+        except IntegrityError:
+            db.session.rollback()
+            flash("Username already exists", "error")
 
-    return render_template("register.html")
+
+@auth_bp.route("/delete_user/<int:user_id>", methods=["DELETE"])
+def delete_user(user_id: int):
+    user = User.query.get(user_id)
+    if not user:
+        return {"error": "User not found"}, 404
+    db.session.delete(user)
+    db.session.commit()
+    return '', 200

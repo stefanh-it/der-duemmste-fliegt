@@ -1,0 +1,21 @@
+
+<div class="mt-10" id="user-container">
+    <table class="min-w-full bg-gray-900 text-white border border-gray-600 rounded-lg overflow-hidden">
+        <thead>
+            <tr>
+                <th class="py-2 px-4 border-b border-gray-600 text-left w-10">ID</th>
+                <th class="py-2 px-4 border-b border-gray-600 text-left">Player Name</th>
+                <th class="py-2 px-4 border-b border-gray-600 text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="user-list">
+            {% for user in users %}
+                {% include 'partials/user_item.html' %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="flex justify-between mt-4">
+        {% include 'partials/pagination.html' %}
+    </div>
+</div>
+
