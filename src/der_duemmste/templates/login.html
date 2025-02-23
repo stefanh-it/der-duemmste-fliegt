@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Der Dümmste fliegt</title>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/style.css') }}>
+</head>
+<body class="bg-gray-800 text-white flex flex-col min-h-screen">
+
+<div class="max-w-md mx-auto mt-10 bg-gray-600 p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl mb-4 font-bold text-center">Login</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="bg-{{category}}-500 text-white text-sm p-2 mb-2 rounded">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('auth.login') }}" class="space-y-4">
+        <div>
+            <label for="username" class="block text-sm font-medium text-gray-200">
+                Username
+            </label>
+            <input type="text" id="username" name="username" required class="
+                    mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md
+                    shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-white
+                ">
+        </div>
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-200">
+                Password
+            </label>
+            <input type="text" id="password" name="password" required class="
+                    mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md
+                    shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-white
+                ">
+        </div>
+        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Login
+        </button>
+    </form>
+</div>

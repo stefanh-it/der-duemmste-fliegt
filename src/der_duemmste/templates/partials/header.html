@@ -1,0 +1,25 @@
+<header class="bg-gray-600 p-4 text-center">
+    <nav>
+        <div class="flex justify-between items-center">
+            <h1 class="text-3xl font-bold">Don't show this!</h1>
+            <ul class="flex justify-end">
+                {% if current_user.is_authenticated %}
+                <li class="mr-6">
+                    <a href="{{ url_for('main.question_overview') }}" 
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Quiz</a>
+                </li>
+                <li class="mr-6">
+                    <a href="{{ url_for('auth.logout') }}" 
+                        class="bg-gray-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Logout</a>
+                </li>
+                {% else %}
+                <li class="mr-6">
+                    <a href="{{ url_for('auth.login') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+
+        </div>
+    </nav>
+</header>
+

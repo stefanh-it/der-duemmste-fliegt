@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Der Dümmste fliegt{% endblock %}
+{% block content %}
+    <section class="text-center">
+        <h1 class="text-3xl font-bold">Der Dümmste fliegt</h1>
+        <p class="text-lg mt-4">Wir beantworten reihum Fragen. 120 Sekunden pro Runde. Am Ende wird der Dümmste gewählt. Du bekommst eine Browser Source. Verwende selbst den Discord </p>
+        <div class="mt-8">
+            <h2 class="text-xl font-bold mb-8">Hallo {{current_user.username}}!</h2>
+            {% if current_user.is_admin %}
+            {% else %}
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
