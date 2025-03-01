@@ -1,5 +1,6 @@
 from werkzeug.security import generate_password_hash
-from src.der_duemmste import create_app, db
+from src.der_duemmste import create_app
+from src.der_duemmste.extensions import db
 from src.der_duemmste.model.question import Question
 from src.der_duemmste.model.user import User
 

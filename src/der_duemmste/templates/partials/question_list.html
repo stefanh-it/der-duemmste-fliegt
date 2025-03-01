@@ -8,7 +8,10 @@
                 <th class="py-2 px-4 border-b border-gray-600 text-center">Actions</th>
             </tr>
         </thead>
-        <tbody id="question-list">
+        <tbody 
+            id="question-list" 
+            hx-target="closest tr" 
+            hx-swap="outerHTML">
             {% for question in questions %}
                 {% include 'partials/question_item.html' %}
             {% endfor %}

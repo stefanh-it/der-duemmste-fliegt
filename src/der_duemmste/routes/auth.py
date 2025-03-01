@@ -3,8 +3,8 @@ from flask_login import login_user, logout_user, login_required
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from .model.user import User
-from . import db, login_manager
+from der_duemmste.model.user import User
+from der_duemmste.extensions import db, login_manager
 
 auth_bp = Blueprint("auth", __name__)
 

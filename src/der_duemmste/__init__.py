@@ -1,20 +1,15 @@
+import os
+import sys
+
 import eventlet
 eventlet.monkey_patch()
 
-from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
-from flask_socketio import SocketIO
 from flask import Flask
-import os
-import sys
+from .extensions import db, login_manager, socketio
 from .socket_events import register_socket_events
 from dotenv import load_dotenv
 
 load_dotenv()
-
-socketio = SocketIO(cors_allowed_origins="*")
-db = SQLAlchemy()
-login_manager = LoginManager()
 
 
 def create_app():
@@ -30,18 +25,18 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = os.getenv("SQLALCHEMY_TRACK_MODIFICATIONS")
 
     db.init_app(app)
-    from .auth import auth_bp
-    from .routes import main_bp
-    # Check if the database exists, if not create it
-    if not os.path.exists(db_path):
-        with app.app_context():
-            db.create_all()
-        print("Database created")
     login_manager.init_app(app)
     socketio.init_app(app)
+
+    from .routes import register_blueprints
     register_socket_events(socketio)
-    app.register_blueprint(main_bp)
-    app.register_blueprint(auth_bp, url_prefix="/auth")
+    register_blueprints(app)
+
+    # # Check if the database exists, if not create it
+    # if not os.path.exists(db_path):
+    #     with app.app_context():
+    #         db.create_all()
+    #     print("Database created")
     return app
 
 

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import Integer, String, Boolean
-from .. import db
+from der_duemmste.extensions import db
 
 
 class Question(db.Model):

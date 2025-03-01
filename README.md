@@ -1,7 +1,7 @@
 # Run Production
 
 ```bash
-uvicorn der-duemmste:app --factory --reload
+    gunicorn -k eventlet -w 1 -b 0.0.0.0:8000 "der_duemmste:create_app()"
 ```
 
 ## Run Local

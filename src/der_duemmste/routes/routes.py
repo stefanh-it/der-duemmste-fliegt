@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, request, jsonify
 from sqlalchemy.exc import IntegrityError
-from .model.question import Question
-from .model.user import User
-from . import db
+
+from der_duemmste.extensions import db
+
+# from der_duemmste.model.question import Question
+# from der_duemmste.model.user import User
 
 main_bp = Blueprint('main', __name__)
 
@@ -19,6 +21,7 @@ def test():
 
 @main_bp.route('/player_overview', methods=['GET'])
 def list_players():
+    from der_duemmste.model.user import User
     page = request.args.get('page', 1, type=int)
     per_page = 20
     pagination = User.query.order_by(User.id.desc()).filter_by(is_admin=False).paginate(
@@ -35,6 +38,7 @@ def list_players():
 
 @main_bp.route('/question_overview', methods=['GET'])
 def list_questions():
+    from der_duemmste.model.question import Question
     page = request.args.get('page', 1, type=int)
     per_page = 20
     pagination = Question.query.order_by(Question.id.desc()).paginate(
@@ -53,8 +57,10 @@ def list_questions():
                            pagination=pagination)
 
 
-@main_bp.route('/add_question', methods=['POST'])
-def add_question():
+# Create a new question
+@main_bp.route('/questions', methods=['POST'])
+def create_question():
+    from der_duemmste.model.question import Question
     question_text = request.form['question']
     question_answer = request.form['answer']
 
@@ -68,11 +74,44 @@ def add_question():
     except IntegrityError:
         db.session.rollback()
         return jsonify({'error': 'Question already exists'}), 400
+
     return render_template('partials/question_item.html', question=new_question)
 
+# Retrieve a question
 
-@main_bp.route('/delete_question/<int:question_id>', methods=['DELETE'])
+
+@main_bp.route('/questions/<int:question_id>', methods=['GET'])
+def show_question(question_id):
+    from der_duemmste.model.question import Question
+    question = Question.query.get_or_404(question_id)
+    return render_template('partials/question_item.html', question=question)
+
+
+@main_bp.route('/questions/<int:question_id>/edit', methods=['GET'])
+def edit_question(question_id):
+    from der_duemmste.model.question import Question
+    question = Question.query.get_or_404(question_id)
+    return render_template('partials/question_edit.html', question=question)
+
+
+@main_bp.route('/update_question/<int:question_id>', methods=['PUT', 'PATCH'])
+def update_question(question_id):
+    from der_duemmste.model.question import Question
+    question = Question.query.get_or_404(question_id)
+    question_text = request.form['question']
+    question_answer = request.form['answer']
+    if not question_text or not question_answer:
+        return jsonify({'error': 'Invalid question form input'}), 400
+
+    question.question = question_text
+    question.answer = question_answer
+    db.session.commit()
+    return render_template('partials/question_item.html', question=question)
+
+
+@main_bp.route('/questions/<int:question_id>/delete', methods=['DELETE'])
 def delete_question(question_id):
+    from der_duemmste.model.question import Question
     question = Question.query.get(question_id)
     if not question:
         return jsonify({'error': 'Question not found'}), 404
