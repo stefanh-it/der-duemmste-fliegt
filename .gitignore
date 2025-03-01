@@ -1,6 +1,7 @@
 #sqlite3 database file
 db/
 node_modules/
+migrations/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
