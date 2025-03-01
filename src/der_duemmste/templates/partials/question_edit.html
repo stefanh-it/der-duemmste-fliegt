@@ -1,6 +1,6 @@
 <tr 
     hx-trigger="cancel"
-    hx-get="{{ url_for('main.show_question', question_id=question.id) }}"
+    hx-get="{{ url_for('questions.show_question', question_id=question.id) }}"
     id="question-{{ question.id }}">
     <td class="py-2 px-4 border-b border-gray-700 text-left w-10">{{ question.id }}</td>
     <td class="py-2 px-4 border-b border-gray-700 text-left">
@@ -21,7 +21,7 @@
     </td>
     <td class="py-2 px-4 border-b border-gray-700 text-center">
         <button
-            hx-put="{{ url_for('main.update_question', question_id=question.id) }}"
+            hx-put="{{ url_for('questions.update_question', question_id=question.id) }}"
             hx-include="closest tr"
             class="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
         >
@@ -29,7 +29,7 @@
         </button>
 
         <button
-            hx-get="{{ url_for('main.show_question', question_id=question.id) }}"
+            hx-get="{{ url_for('questions.show_question', question_id=question.id) }}"
             class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300"
         >
             Cancel

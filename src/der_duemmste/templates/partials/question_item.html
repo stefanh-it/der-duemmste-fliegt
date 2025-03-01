@@ -6,7 +6,7 @@
         <!-- hx-target="#question-{{ question.id }}"  -->
         <!-- hx-swap="outerHTML transition:true" -->
         <button
-            hx-get="{{ url_for('main.edit_question', question_id=question.id) }}"
+            hx-get="{{ url_for('questions.edit_question', question_id=question.id) }}"
             hx-target="#question-{{ question.id }}"
             hx-trigger="click"
             class="bg-emerald-400 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded transition duration-300"
@@ -14,7 +14,7 @@
             Edit 
         </button>
         <button
-            hx-delete="{{ url_for('main.delete_question', question_id=question.id) }}"
+            hx-delete="{{ url_for('questions.delete_question', question_id=question.id) }}"
             hx-target="closest tr"
             hx-swap="outerHTML transition:true"
             hx-confirm="Do you want to delete?"

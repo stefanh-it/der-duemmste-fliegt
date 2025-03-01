@@ -6,7 +6,7 @@
         {% if current_user.is_admin %}
         <!-- Add Question Form -->
         <form 
-            hx-post="{{ url_for('main.create_question') }}" 
+            hx-post="{{ url_for('questions.create_question') }}" 
             hx-target="#question-list" 
             hx-swap="afterbegin"
             class="max-w-xl mx-auto mt-6 mb-6 bg-gray-600 p-4 rounded-lg shadow-lg">
