@@ -1,7 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify
-from sqlalchemy.exc import IntegrityError
-
-from der_duemmste.extensions import db
+from flask import Blueprint, render_template, request
 
 from der_duemmste.model.question import Question
 from der_duemmste.model.user import User
@@ -26,13 +23,16 @@ def list_players():
     pagination = User.query.order_by(User.id.desc()).filter_by(is_admin=False).paginate(
         page=page, per_page=per_page, error_out=False
     )
+    context = {
+        'users': pagination.items,
+        'pagination': pagination,
+        'endpoint': 'main.list_players',
+        'target': '#users-container'}
     if request.headers.get('HX-Request'):
         return render_template(
-            'partials/user_list.html',
-            users=pagination.items,
-            pagination=pagination
+            'partials/user_list.html', **context
         )
-    return render_template('player_overview.html')
+    return render_template('player_overview.html', **context)
 
 
 @main_bp.route('/question_overview', methods=['GET'])
@@ -42,15 +42,16 @@ def list_questions():
     pagination = Question.query.order_by(Question.id.desc()).paginate(
         page=page, per_page=per_page, error_out=False
     )
+    context = {
+        'questions': pagination.items,
+        'pagination': pagination,
+        'endpoint': 'main.list_questions',
+        'target': '#questions-container'}
 
     if request.headers.get('HX-Request'):
         return render_template(
-            'partials/question_list.html',
-            questions=pagination.items,
-            pagination=pagination
+            'partials/question_list.html', **context
         )
 
-    return render_template('question_overview.html',
-                           questions=pagination.items,
-                           pagination=pagination)
+    return render_template('question_overview.html', **context)
 

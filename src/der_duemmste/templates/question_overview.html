@@ -9,6 +9,7 @@
             hx-post="{{ url_for('questions.create_question') }}" 
             hx-target="#question-list" 
             hx-swap="afterbegin"
+            hx-on::after-request="setTimeout(() => this.reset(), 50)"
             class="max-w-xl mx-auto mt-6 mb-6 bg-gray-600 p-4 rounded-lg shadow-lg">
         
             <label for="question" class="block text-sm font-medium text-gray-200">
@@ -34,6 +35,8 @@
         </form>
 
         <!-- Questions Table -->
+        {% set endpoint = 'main.list_questions' %}
+        {% set target = '#questions-container' %}
         {% include 'partials/question_list.html' %}
         {% else %}
         <h2 class="mt-6 text-xl font-bold">There's nothing to see here</h2>

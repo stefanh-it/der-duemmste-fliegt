@@ -1,27 +1,36 @@
 <tr 
     hx-trigger="cancel"
-    hx-get="{{ url_for('questions.show_question', question_id=question.id) }}"
-    id="question-{{ question.id }}">
-    <td class="py-2 px-4 border-b border-gray-700 text-left w-10">{{ question.id }}</td>
+    hx-get="{{ url_for('user.show_user', user_id=user.id) }}"
+    id="user-{{ user.id }}">
+    <td class="py-2 px-4 border-b border-gray-700 text-left w-10">{{ user.id }}</td>
     <td class="py-2 px-4 border-b border-gray-700 text-left">
         <input
             type="text"
-            name="question"
-            value="{{ question.question }}"
+            name="username"
+            value="{{ user.username }}"
             class="px-2 py-1 bg-gray-600 text-white w-full border border-gray-500 rounded"
         >
     </td>
     <td class="py-2 px-4 border-b border-gray-700 text-left">
         <input
-            type="text"
-            name="answer"
-            value="{{ question.answer }}"
+            type="password"
+            name="password"
+            placeholder="leave blank to keep"
             class="px-2 py-1 bg-gray-600 text-white w-full border border-gray-500 rounded"
+        >
+    </td>
+
+    <td class="py-2 px-4 border-b border-gray-700 text-left">
+        <input
+            type="text"
+            name="remaining_lives"
+            value="{{ user.remaining_lives }}"
+            class="px-2 py-1 bg-gray-600 text-white w-[30px] border border-gray-500 rounded"
         >
     </td>
     <td class="py-2 px-4 border-b border-gray-700 text-center">
         <button
-            hx-put="{{ url_for('questions.update_question', question_id=question.id) }}"
+            hx-put="{{ url_for('user.update_user', user_id=user.id) }}"
             hx-include="closest tr"
             class="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
         >
@@ -29,7 +38,7 @@
         </button>
 
         <button
-            hx-get="{{ url_for('questions.show_question', question_id=question.id) }}"
+            hx-get="{{ url_for('user.show_user', user_id=user.id) }}"
             class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300"
         >
             Cancel

@@ -6,9 +6,10 @@
         {% if current_user.is_admin %}
         <!-- Add Question Form -->
         <form 
-            hx-post="{{ url_for('auth.register') }}" 
+            hx-post="{{ url_for('user.register_user') }}" 
             hx-target="#user-list" 
-            hx-swap="beforeend" 
+            hx-swap="afterbegin"
+            hx-on::after-request="setTimeout(() => this.reset(), 50)"
             class="max-w-xl mx-auto mt-6 mb-6 bg-gray-600 p-4 rounded-lg shadow-lg">
         
             <label for="username" class="block text-sm font-medium text-gray-200">
@@ -34,15 +35,7 @@
         </form>
 
         <!-- Questions Table -->
-        <div class="mt-10" id="user-container">
-
-        </div>
-        <div
-            hx-target="#user-container"
-            hx-swap="outerHTML"
-            hx-get="{{ url_for('main.list_players') }}"
-            hx-trigger="load delay:200ms">
-        </div>
+        {% include 'partials/user_list.html' %}
         {% else %}
         <h2 class="mt-6 text-xl font-bold">There's nothing to see here</h2>
         {% endif %}
